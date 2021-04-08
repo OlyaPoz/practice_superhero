@@ -1,13 +1,15 @@
 const { Superhero } = require("../models");
 const createErr = require("http-errors");
 
+
+
 module.exports.createSuperhero = async (req, res, next) => {
   try {
     const { body } = req;
     const createdSuperhero = await Superhero.create(body);
 
     if (!createdSuperhero) {
-      return next(createError(400));
+      return next(createErr(400));
     }
     res.send(createdSuperhero)
   } catch (err) {
@@ -24,7 +26,7 @@ module.exports.getSuperhero = async (req, res, next) => {
     const superhero = await Superhero.findByPk(id);
 
     if (!superhero) {
-      return next(createError(404));
+      return next(createErr(404));
     }
     res.send(superhero)
   } catch (err) {
@@ -35,13 +37,13 @@ module.exports.getSuperhero = async (req, res, next) => {
 module.exports.getAllSuperheroes = async (req, res, next) => {
   try {
     const { 
-      params: { id },
+      pagination,
     } = req;
-
-    const superheroes = await Superhero.findAll(id);
+    
+    const superheroes = await Superhero.findAll({...pagination});
 
     if (!superheroes) {
-      return next(createError(404));
+      return next(createErr(404));
     }
     res.send(superheroes)
   } catch (err) {
@@ -62,7 +64,7 @@ module.exports.updateSuperhero = async (req, res, next) => {
     });
 
     if (rowsCount !== 1) {
-      return next(createError(400));
+      return next(createErr(400));
     }
     res.send({data: updatedSuperhero});
   } catch (err) {
@@ -79,10 +81,31 @@ module.exports.deleteSuperhero = async (req, res, next) => {
     const rowsCount = await Superhero.destroy({ where: { id } });
 
     if (rowsCount !== 1) {
-      return next(createError(404));
+      return next(createErr(404));
     }
 
     res.send({ data: result });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.createImage = async (req, res, next) => {
+  try {
+    const {
+      file: { filename },
+      params: { imageId },
+    } = req;
+
+    const [count, [updatedSuperhero]] = await Superhero.update(
+      { imagePath: filename },
+      {
+        where: { id: imageId },
+        returning: true,
+      }
+    );
+
+    res.send(updatedSuperhero);
   } catch (err) {
     next(err);
   }
