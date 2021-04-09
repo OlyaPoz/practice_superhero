@@ -3,6 +3,7 @@ const createErr = require("http-errors");
 
 
 
+
 module.exports.createSuperhero = async (req, res, next) => {
   try {
     const { body } = req;
@@ -90,23 +91,22 @@ module.exports.deleteSuperhero = async (req, res, next) => {
   }
 };
 
-module.exports.createImage = async (req, res, next) => {
+module.exports.createSuperheroImage = async (req, res, next) => {
   try {
     const {
       file: { filename },
       params: { imageId },
     } = req;
 
-    const [count, [updatedSuperhero]] = await Superhero.update(
-      { imagePath: filename },
-      {
-        where: { id: imageId },
-        returning: true,
+    const createImage = await Superhero.create(
+      { imagePath: filename, 
+        superheroId: id
       }
     );
 
-    res.send(updatedSuperhero);
+    res.send(createImage);
   } catch (err) {
     next(err);
   }
 };
+

@@ -1,7 +1,7 @@
 const { Image, Superhero } = require("../models");
 const createErr = require("http-errors");
 
-module.exports.createSuperheroImage = async (req, res, next) => {
+module.exports.createImage = async (req, res, next) => {
   try {
     
     const superheroImg = await Superhero.createImage(image);
@@ -10,6 +10,22 @@ module.exports.createSuperheroImage = async (req, res, next) => {
       return next(createErr(400));
     }
     res.send(superheroImg)
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.getSuperheroImgs = async (req, res, next) => {
+  try {
+    const { superheroInstance: superhero } = req;
+
+    const imgs = await superhero.getImages();
+
+    if (!imgs.length) {
+      return next(createError(404));
+    }
+
+    res.send({ data: imgs });
   } catch (err) {
     next(err);
   }
