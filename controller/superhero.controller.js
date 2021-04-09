@@ -2,8 +2,6 @@ const { Superhero } = require("../models");
 const createErr = require("http-errors");
 
 
-
-
 module.exports.createSuperhero = async (req, res, next) => {
   try {
     const { body } = req;
@@ -99,8 +97,8 @@ module.exports.createSuperheroImage = async (req, res, next) => {
     } = req;
 
     const createImage = await Superhero.create(
-      { imagePath: filename, 
-        superheroId: id
+      { imagePath: { filename }, 
+        superheroId: { id },
       }
     );
 
