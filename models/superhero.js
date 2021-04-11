@@ -53,6 +53,9 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      superheroImg: {
+        type: DataTypes.STRING,
+      }
     },
     {
       sequelize,

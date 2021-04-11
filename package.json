@@ -1,7 +1,6 @@
 {
   "name": "practice_superheroes",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./server.js"
@@ -19,5 +18,17 @@
   },
   "devDependencies": {
     "sequelize-cli": "^6.2.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OlyaPoz/practice_superhero.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OlyaPoz/practice_superhero/issues"
+  },
+  "homepage": "https://github.com/OlyaPoz/practice_superhero#readme",
+  "description": ""
 }

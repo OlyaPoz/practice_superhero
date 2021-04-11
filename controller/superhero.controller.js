@@ -97,8 +97,8 @@ module.exports.createSuperheroImage = async (req, res, next) => {
     } = req;
 
     const createImage = await Superhero.create(
-      { imagePath: { filename }, 
-        superheroId: { id },
+      { imagePath: filename , 
+        id: superheroId,
       }
     );
 
