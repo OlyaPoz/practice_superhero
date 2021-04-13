@@ -1,17 +1,27 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('images', {
+    await queryInterface.createTable('super_powers', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      imagePath: {
-        field: 'image_path',
-        type: Sequelize.TEXT,
-        allowNull: false
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      superheroId: {
+        field: 'superhero_id',
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'superheroes',
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       },
       createdAt: {
         field: 'created_at',
@@ -22,21 +32,10 @@ module.exports = {
         field: 'updated_at',
         allowNull: false,
         type: Sequelize.DATE
-      },
-      superheroId: { 
-        field: 'superhero_id',
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { 
-          model: 'superheroes', 
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('images');
+    await queryInterface.dropTable('super_powers');
   }
 };

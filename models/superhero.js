@@ -3,8 +3,12 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Superhero extends Model {
     static associate(models) {
+      Superhero.hasMany(models.SuperPower, {
+        foreignKey: 'superheroId',
+        as: 'super_powers',
+      });
       Superhero.hasMany(models.Image, {
-        foreignKey: "imageId",
+        foreignKey: "superheroId",
         as: 'images',
       });
     }

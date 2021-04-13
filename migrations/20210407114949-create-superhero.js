@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       nickname: {
+        unique: true,
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -21,10 +22,6 @@ module.exports = {
         field: 'origin_description',
         allowNull: false,
         type: Sequelize.STRING
-      },
-      superpowers: {
-        allowNull: false,
-        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       catchPhrase: {
         field: 'catch_phrase',
