@@ -1,9 +1,15 @@
-const { Router } = require('express');
 const ImageController  = require('../controller/image.controller');
-const  { checkSuperhero } = require('../middlewares/superhero.mw');
+const imageRouter = require('express').Router({ mergeParams: true });
+const { uploadImages } = require('../middlewares/file.upload');
 
-const imageRouter = Router();
+imageRouter
+  .route('/')
+  .get(ImageController.getHeroImages)
+  .post(uploadImages, ImageController.addHeroImages);
 
-imageRouter.post('/', checkSuperhero, ImageController.createImage);
+imageRouter
+  .route('/:imageId')
+  .get(ImageController.getImage)
+  .delete(ImageController.deleteImage);
 
 module.exports = imageRouter;

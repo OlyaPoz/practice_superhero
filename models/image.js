@@ -11,8 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Image.init({
-    imagePath: {
-      field: 'image_path',
+    path: {
       type:DataTypes.TEXT,
       allowNull: false,
       validate: {

@@ -1,31 +1,33 @@
-const { Image, Superhero } = require("../models");
+const { Image } = require("../models");
 const createErr = require("http-errors");
 
-module.exports.createImage = async (req, res, next) => {
+module.exports.getHeroImages = async (req, res, next) => {
   try {
-    
-    const superheroImg = await Superhero.createImage(image);
+    const {
+      params: { superheroId },
+    } = req;
 
-    if (!superheroImg) {
-      return next(createErr(400));
-    }
-    res.send(superheroImg)
+    const images = await Image.findAll({
+      where: { superheroId },
+    });
+
+    res.send({ data: images });
   } catch (err) {
     next(err);
   }
 };
 
-module.exports.getSuperheroImgs = async (req, res, next) => {
+module.exports.addHeroImages = async (req, res, next) => {
   try {
-    const { superheroInstance: superhero } = req;
+    const {
+      params: { superheroId },
+      files,
+    } = req;
 
-    const imgs = await superhero.getImages();
+    const images = files.map(file => ({ path: file, superheroId }));
+    const newImages = await Image.bulkCreate(images, { returning: true });
 
-    if (!imgs.length) {
-      return next(createError(404));
-    }
-
-    res.send({ data: imgs });
+    res.status(201).send({ data: newImages });
   } catch (err) {
     next(err);
   }
@@ -33,48 +35,38 @@ module.exports.getSuperheroImgs = async (req, res, next) => {
 
 module.exports.getImage = async (req, res, next) => {
   try {
-    const { 
-      params: { id },
+    const {
+      params: { superheroId, imageId },
     } = req;
 
-    const image = await Image.findByPk(id);
+    const image = await Image.findOne({
+      where: { superheroId, id: imageId },
+    });
 
     if (!image) {
       return next(createErr(404));
     }
-    res.send(image)
+
+    res.status(200).send({ data: image });
   } catch (err) {
     next(err);
   }
 };
-
-module.exports.getAllImages = async (req, res, next) => {
-  try {
-    
-    const images = await Superhero.findAll();
-
-    if (!images) {
-      return next(createErr(404));
-    }
-    res.send(images)
-  } catch (err) {
-    next(err);
-  }
-};
-
 module.exports.deleteImage = async (req, res, next) => {
   try {
     const {
-      params: { id },
+      params: { superheroId, imageId },
     } = req;
 
-    const rowsCount = await Image.destroy({ where: { id } });
+    const count = await Image.destroy({
+      where: { superheroId, id: imageId },
+    });
 
-    if (rowsCount !== 1) {
+    if (count === 0) {
       return next(createErr(404));
     }
 
-    res.send({ data: result });
+    res.status(200).end();
   } catch (err) {
     next(err);
   }
