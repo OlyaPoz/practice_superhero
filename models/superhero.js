@@ -5,12 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Superhero.hasMany(models.Image, {
         foreignKey: "imageId",
+        as: 'images',
       });
     }
   }
   Superhero.init(
     {
       nickname: {
+        unique: true,
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -36,14 +38,6 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
-      superpowers: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false,
-        validate: {
-          notNull: true,
-          notEmpty: true,
-        },
-      },
       catchPhrase: {
         field: "catch_phrase",
         type: DataTypes.STRING,
@@ -53,9 +47,6 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
-      superheroImg: {
-        type: DataTypes.STRING,
-      }
     },
     {
       sequelize,

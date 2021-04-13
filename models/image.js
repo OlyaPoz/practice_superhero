@@ -14,7 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     imagePath: {
       field: 'image_path',
       type:DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true,
+      },
     }
   }, {
     sequelize,
