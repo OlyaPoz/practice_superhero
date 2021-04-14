@@ -1,6 +1,6 @@
 const path = require('path');
 const multer = require('multer');
-const { STATIC_PATH } = require('../config');
+const { STATIC_PATH } = require('../config/configuration');
 const { createPublicFolder } = require('../utils');
 
 const pathToImages = path.resolve(STATIC_PATH, 'images');
