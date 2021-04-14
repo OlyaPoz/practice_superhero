@@ -61,20 +61,21 @@ module.exports.getSuperhero = async (req, res, next) => {
       params: { id },
     } = req;
 
-    const superhero = await Superhero.findByPk(id, {
-      include: [
-        {
-          model: SuperPower,
-          attributes: ['id', 'name'],
-          as: 'superPowers',
-        },
-        {
-          model: Image,
-          attributes: ['id', 'path'],
-          as: 'images',
-        },
-      ],
-    });
+    const superhero = await Superhero.findByPk(id,
+       {
+        include: [
+          {
+            model: SuperPower,
+            attributes: ['id', 'name'],
+            as: 'superPowers',
+          },
+          {
+            model: Image,
+            attributes: ['id', 'path'],
+            as: 'images',
+          },
+        ],
+      });
 
     if (!superhero) {
       return next(createErr(404));

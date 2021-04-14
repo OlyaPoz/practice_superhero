@@ -6,10 +6,6 @@ const generateSuperhero =  key => ({
   origin_description: `he was born Kal-El on the planet Krypton, 
   before being rocketed to Earth as an infant by his scientist 
   father Jor-El, moments before Krypton's destruction${key}`,
-  superpowers: [`solar energy absorption and healing factor${key}`,
-   `solar flare and heat vision${key}`, 
-   `solar invulnerability${key}`, 
-   `flight${key}`],
    catch_phrase: `“​ Look, up in the sky, it's a bird, it's a plane, it's Superman!”${key}`,
    created_at: new Date(),
    updated_at: new Date(),
