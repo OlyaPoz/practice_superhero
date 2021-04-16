@@ -1,4 +1,4 @@
-const { Superhero } = require("../models");
+const { Superhero,  SuperPower, Image } = require("../models");
 const createErr = require("http-errors");
 
 
@@ -22,7 +22,7 @@ module.exports.createSuperhero = async (req, res, next) => {
     }
 
     if (body?.superPowers?.length) {
-      const powers = body.superPowers.map(power => ({
+      const powers = body.SuperPowers.map(power => ({
         name: power,
         superheroId: superhero.id,
       }));
@@ -127,8 +127,8 @@ module.exports.updateSuperhero = async (req, res, next) => {
       });
     }
 
-    if (body.superPowers) {
-      const powers = body.superPowers.map(power => ({
+    if (body.SuperPowers) {
+      const powers = body.SuperPowers.map(power => ({
         name: power,
         superheroId: updatedSuperhero.id,
       }));
